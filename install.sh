@@ -1,5 +1,5 @@
 #!/bin/bash
-echo -e '\033[1m"Fetching Packages"\033[0m'
+echo -e '\033[1mFetching Packages\033[0m'
 echo ""
 sudo apt-get install -y figlet.
 sudo apt-get install ruby	
@@ -14,6 +14,4 @@ cd ../../
 mv covid.sh covid19
 sudo chmod 777 covid19
 sudo cp covid19 /usr/bin/
-echo ""
 echo -e '\033[1mInstallation Complete\033[0m'
-
