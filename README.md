@@ -8,7 +8,8 @@ Get information about COVID19 cases all over the world in just a single go.
 ## Install The Program
 
 ```bash
-$  git clone 
+$  git clone https://github.com/whokilleddb/covid19tracker
+$  cd covid19tracker
 $  chmod +x install.sh
 $  ./install.sh
 ```
@@ -22,7 +23,7 @@ $  covid19
 
 In your terminal for a report on the Global scenario.
 
-![](https://github.com/whokilleddb/covid19tracker/blob/master/Images/SS1.png)
+![](https://github.com/whokilleddb/covid19tracker/blob/master/Images/S1.png)
 
 If you want the statistics of any country in particular type in : 
 
@@ -32,8 +33,14 @@ $  covid19 country_name
 
 And once you hit Enter , you will have your information
 
-![](https://github.com/whokilleddb/covid19tracker/blob/master/Images/SS2.png)
+![](https://github.com/whokilleddb/covid19tracker/blob/master/Images/S2.png)
 
+## Uninstall The Program
+
+```bash
+$  chmod +x uninstall.sh
+$  ./uninstall.sh
+```
 ## Note :
 
 For :
@@ -47,4 +54,3 @@ For :
 
 
 ![](https://github.com/whokilleddb/covid19tracker/blob/master/Images/staysafe.png)
-
