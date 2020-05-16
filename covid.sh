@@ -10,6 +10,7 @@ PURPLE='\033[01;35m'
 CYAN='\033[01;36m'
 WHITE='\033[01;37m'
 BOLD='\033[1m'
+BLINK='\033[5m'
 UNDERLINE='\033[4m'
 
 echo -e "${CYAN}${BOLD}~ Who Killed DB ?${NONE}${NONE}"
@@ -32,11 +33,11 @@ if [ $# -ne 1 ]; then
 
 	temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
 	echo $temp | tr ' ' '\n'> results.txt
-	echo "Total Number Of Cases So Far  : $total_cases"
+	echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
 	deaths=$(awk 'NR == 1 {print $1}' results.txt)
-	echo "Deaths : $deaths"
+	echo -e "Deaths : ${RED}$deaths${NONE}"
 	recovered=$(awk 'NR == 2 {print $1}' results.txt)
-	echo "Total Recovered : $recovered"
+	echo -e "Total Recovered : ${YELLOW}$recovered${NONE}"
 
 	true > results.txt
 
@@ -93,11 +94,11 @@ total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>
 country=$(echo $1 | tr '-' ' ')
 temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
 echo $temp | tr ' ' '\n'> results.txt
-echo "Total Number Of Cases So Far  : $total_cases"
+echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
 deaths=$(awk 'NR == 1 {print $1}' results.txt)
-echo "Deaths : $deaths"
+echo -e "Deaths : ${RED}$deaths${NONE}"
 recovered=$(awk 'NR == 2 {print $1}' results.txt)
-echo "Total Recovered : $recovered"
+echo -e "Total Recovered : ${YELLOW}$recovered${NONE}"
 
 true > results.txt
 
@@ -149,5 +150,7 @@ echo "$DD/$MM/$YY : $(cat results.txt | sed -n '7p')"
 echo ""
 source="www.worldometers.info"
 echo -e "${PURPLE}Source : $source${NONE}"
+echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
+echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${PURPLE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${WHITE}SAFE${NONE}"
 rm results.txt
 rm output.txt
