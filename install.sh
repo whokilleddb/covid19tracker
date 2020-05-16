@@ -11,7 +11,8 @@ echo ""
 echo -e '\033[1mAlmost There....\033[0m'
 echo ""
 cd ../../
-mv covid.sh covid19
-sudo chmod 777 covid19
-sudo cp covid19 /usr/bin/
+
+sudo chmod 777 covid.sh
+sudo cp covid.sh /usr/bin/
+mv /usr/bin/covid.sh /usr/bin/covid19
 echo -e '\033[1mInstallation Complete\033[0m'
