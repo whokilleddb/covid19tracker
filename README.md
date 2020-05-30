@@ -28,7 +28,7 @@ In your terminal for a report on the Global scenario.
 If you want the statistics of any country in particular type in : 
 
 ```bash
-$  covid19 country_name
+$  covid19 <country name>
 ```
 
 And once you hit Enter , you will have your information
