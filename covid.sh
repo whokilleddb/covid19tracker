@@ -116,12 +116,9 @@ fi
 	country=$(echo $1 | tr '-' ' ')
 	echo -e "${WHITE}Presenting The Statistics for : ${country^^}${NONE}"
 	echo ""
-
-
+	
 	total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>//g")
 	country=$(echo $1 | tr '-' ' ')
-
-
 
 	temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
 	echo $temp | tr ' ' '\n'> results.txt
@@ -161,10 +158,13 @@ fi
 	getdate 5
 	getdate 6
 	getdate 7
+	
 	echo ""
+	
 	source="www.worldometers.info"
 	echo -e "${PURPLE}Source : $source${NONE}"
 	echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
 	echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${WHITE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${PURPLE}SAFE${NONE}"
+	
 	rm results.txt
 	rm output.txt
