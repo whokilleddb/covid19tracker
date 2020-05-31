@@ -35,8 +35,10 @@ if [ $# -ne 1 ]; then
 
 	temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
 	echo $temp | tr ' ' '\n'> results.txt
+	
 	echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
 	deaths=$(awk 'NR == 1 {print $1}' results.txt)
+	
 	echo -e "Deaths : ${RED}$deaths${NONE}"
 	recovered=$(awk 'NR == 2 {print $1}' results.txt)
 	echo -e "Total Recovered : ${YELLOW}$recovered${NONE}"
@@ -76,71 +78,81 @@ if [ $# -ne 1 ]; then
 	exit -1	
 	
 fi
-
-country=$(echo $1)
-country=${country,,}
-#For coverting only first Character into uppercase use ${country^}"
-
-curl -sS "https://www.worldometers.info/coronavirus/country/$country" > output.txt
-
-function check_errors(){
-	[ $? -ne 0 ] && echo "Error Fetching Webpage." && exit -1
 	
-}
+	country=$(echo $1)
+	country=${country,,}
+	#For coverting only first Character into uppercase use ${country^}"
+	check=$(curl -sS https://www.worldometers.info/coronavirus/country/$country)
+	if [ -z "$check" ];then 
+		echo -e "${RED}${BOLD}COUNTRY NAME NOT VALID${NONE}"
+		echo ""
+		source="www.worldometers.info"
+		echo -e "${PURPLE}Source : $source${NONE}"
+		echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
+		echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${WHITE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${PURPLE}SAFE${NONE}"
+		exit -1
+	fi
+	curl -sS "https://www.worldometers.info/coronavirus/country/$country" > output.txt
+	
+	
+	function check_errors(){
+		[ $? -ne 0 ] && echo "Error Fetching Webpage." && exit -1
+		
+	}
 
-check_errors
-country=$(echo $1 | tr '-' ' ')
-echo -e "${WHITE}Presenting The Statistics for : ${country^^}${NONE}"
-echo ""
+	check_errors
+	country=$(echo $1 | tr '-' ' ')
+	echo -e "${WHITE}Presenting The Statistics for : ${country^^}${NONE}"
+	echo ""
 
 
-total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>//g")
-country=$(echo $1 | tr '-' ' ')
+	total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>//g")
+	country=$(echo $1 | tr '-' ' ')
 
 
 
-temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
-echo $temp | tr ' ' '\n'> results.txt
-echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
-deaths=$(awk 'NR == 1 {print $1}' results.txt)
-echo -e "Deaths : ${RED}$deaths${NONE}"
-recovered=$(awk 'NR == 2 {print $1}' results.txt)
-echo -e "Total Recovered : ${YELLOW}$recovered${NONE}"
+	temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
+	echo $temp | tr ' ' '\n'> results.txt
+	echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
+	deaths=$(awk 'NR == 1 {print $1}' results.txt)
+	echo -e "Deaths : ${RED}$deaths${NONE}"
+	recovered=$(awk 'NR == 2 {print $1}' results.txt)
+	echo -e "Total Recovered : ${YELLOW}$recovered${NONE}"
 
-true > results.txt
+	true > results.txt
 
-cat output.txt| grep '<li class="news_li"><strong>' | sed "s/<[^>]*>//g" | sed "s/&.*//"  > results.txt
+	cat output.txt| grep '<li class="news_li"><strong>' | sed "s/<[^>]*>//g" | sed "s/&.*//"  > results.txt
 
-echo ''
-echo -e "${RED}This Week's Report : ${NONE}"
+	echo ''
+	echo -e "${RED}This Week's Report : ${NONE}"
 
-echo ""
+	echo ""
 
-function getdate(){
-x=$1
+	function getdate(){
+	x=$1
 
-DD=$(date --date="($x) day ago" +%d)
-MM=$(date --date="($x) day ago" +%m)
-YY=$(date --date="($x) day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n "$x"p)"
+	DD=$(date --date="($x) day ago" +%d)
+	MM=$(date --date="($x) day ago" +%m)
+	YY=$(date --date="($x) day ago" +%y)
+	echo "$DD/$MM/$YY : $(cat results.txt | sed -n "$x"p)"
 
-}
+	}
 
-DD=$(date +%d)
-MM=$(date +%m)
-YY=$(date +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '1p') "
+	DD=$(date +%d)
+	MM=$(date +%m)
+	YY=$(date +%y)
+	echo "$DD/$MM/$YY : $(cat results.txt | sed -n '1p') "
 
-getdate 2
-getdate 3
-getdate 4
-getdate 5
-getdate 6
+	getdate 2
+	getdate 3
+	getdate 4
+	getdate 5
+	getdate 6
 
-echo ""
-source="www.worldometers.info"
-echo -e "${PURPLE}Source : $source${NONE}"
-echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
-echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${WHITE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${PURPLE}SAFE${NONE}"
-rm results.txt
-rm output.txt
+	echo ""
+	source="www.worldometers.info"
+	echo -e "${PURPLE}Source : $source${NONE}"
+	echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
+	echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${WHITE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${PURPLE}SAFE${NONE}"
+	rm results.txt
+	rm output.txt
