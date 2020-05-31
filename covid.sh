@@ -29,6 +29,8 @@ if [ $# -ne 1 ]; then
 		
 	}
 	check_errors
+	
+	
 	total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>//g")
 
 	temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
@@ -90,8 +92,13 @@ check_errors
 country=$(echo $1 | tr '-' ' ')
 echo -e "${WHITE}Presenting The Statistics for : ${country^^}${NONE}"
 echo ""
+
+
 total_cases=$(cat output.txt | grep '<span style="color:#aaa">' | sed "s/<[^>]*>//g")
 country=$(echo $1 | tr '-' ' ')
+
+
+
 temp=$(cat output.txt | grep '<span>' | sed "s/<[^>]*>//g")
 echo $temp | tr ' ' '\n'> results.txt
 echo -e "Total Number Of Cases So Far  : ${RED}$total_cases${NONE}"
@@ -109,48 +116,31 @@ echo -e "${RED}This Week's Report : ${NONE}"
 
 echo ""
 
+function getdate(){
+x=$1
+
+DD=$(date --date="($x) day ago" +%d)
+MM=$(date --date="($x) day ago" +%m)
+YY=$(date --date="($x) day ago" +%y)
+echo "$DD/$MM/$YY : $(cat results.txt | sed -n "$x"p)"
+
+}
+
 DD=$(date +%d)
 MM=$(date +%m)
 YY=$(date +%y)
 echo "$DD/$MM/$YY : $(cat results.txt | sed -n '1p') "
 
+getdate 2
+getdate 3
+getdate 4
+getdate 5
+getdate 6
 
-DD=$(date --date="yesterday" +%d)
-MM=$(date --date="yesterday" +%m)
-YY=$(date --date="yesterday" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '2p') "
-
-
-DD=$(date --date="2 day ago" +%d)
-MM=$(date --date="2 day ago" +%m)
-YY=$(date --date="2 day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '3p') "
-
-DD=$(date --date="3 day ago" +%d)
-MM=$(date --date="3 day ago" +%m)
-YY=$(date --date="3 day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '4p') "
-
-
-DD=$(date --date="4 day ago" +%d)
-MM=$(date --date="4 day ago" +%m)
-YY=$(date --date="4 day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '5p') "
-
-DD=$(date --date="5 day ago" +%d)
-MM=$(date --date="5 day ago" +%m)
-YY=$(date --date="5 day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '6p') "
-
-
-DD=$(date --date="6 day ago" +%d)
-MM=$(date --date="6 day ago" +%m)
-YY=$(date --date="6 day ago" +%y)
-echo "$DD/$MM/$YY : $(cat results.txt | sed -n '7p')"
 echo ""
 source="www.worldometers.info"
 echo -e "${PURPLE}Source : $source${NONE}"
 echo -e "${CYAN}Follow ${BOLD}@whokilleddb${NONE}${NONE}"
-echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${PURPLE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${WHITE}SAFE${NONE}"
+echo -e "${BLINK}${BOLD}${RED}STAY${NONE} ${BLINK}${BOLD}${WHITE}HOME${NONE} ${BLINK}${BOLD}${YELLOW}STAY${NONE} ${BLINK}${BOLD}${PURPLE}SAFE${NONE}"
 rm results.txt
 rm output.txt
