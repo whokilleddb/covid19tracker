@@ -82,6 +82,18 @@ fi
 	country=$(echo $1)
 	country=${country,,}
 	#For coverting only first Character into uppercase use ${country^}"
+	if [ "$country" == "usa" ]||[ "$country" == "unitedstates" ];then 
+		country="us"
+	fi
+	
+	if [ "$country" == "england" ] ||[ "$country" == "unitedkingdom" ];then 
+		country="uk"
+	fi
+	
+	if [ "$country" == "uae" ]||[ "$country" == "unitedarab emirates" ];then 
+		country="united-arab-emirates"
+	fi
+	
 	check=$(curl -sS https://www.worldometers.info/coronavirus/country/$country)
 	if [ -z "$check" ];then 
 		echo -e "${RED}${BOLD}COUNTRY NAME NOT VALID${NONE}"
@@ -130,10 +142,10 @@ fi
 
 	function getdate(){
 	x=$1
-
-	DD=$(date --date="($x) day ago" +%d)
-	MM=$(date --date="($x) day ago" +%m)
-	YY=$(date --date="($x) day ago" +%y)
+	
+	DD=$(date --date="$x day ago" +%d)
+	MM=$(date --date="$x day ago" +%m)
+	YY=$(date --date="$x day ago" +%y)
 	echo "$DD/$MM/$YY : $(cat results.txt | sed -n "$x"p)"
 
 	}
@@ -148,7 +160,7 @@ fi
 	getdate 4
 	getdate 5
 	getdate 6
-
+	getdate 7
 	echo ""
 	source="www.worldometers.info"
 	echo -e "${PURPLE}Source : $source${NONE}"
